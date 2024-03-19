@@ -6,3 +6,38 @@ Amazon SageMaker: As mentioned earlier, SageMaker is an excellent choice for bui
 AWS Batch: This service can help you run batch jobs to process large volumes of satellite imagery data in parallel, using a fleet of EC2 instances or AWS Fargate (serverless compute). You can integrate AWS Batch with SageMaker for running model inference on the processed satellite images.
 Amazon Elastic Container Service (ECS) or AWS Fargate: These services can be used to deploy and manage the containerized applications and microservices that will power your website and app. ECS allows you to run containers on a cluster of EC2 instances, while Fargate is a serverless compute engine for running containers without managing infrastructure.
 Amazon S3: You can use S3 to store your satellite imagery data, ocean current data, and model artifacts.
+
+Let's focus on getting your code up and running on AWS using Amazon SageMaker, AWS Batch, Amazon S3, and optionally Amazon EFS. Here are the detailed steps you can follow to get started:
+
+Set up AWS Account and IAM Permissions:
+If you don't have an AWS account already, create one (you can use the free tier for now).
+Create an IAM user with programmatic access and attach the necessary IAM policies (e.g., AmazonSageMakerFullAccess, AWSBatchFullAccess, AmazonS3FullAccess, and AmazonElasticFileSystemFullAccess).
+Note down the Access Key ID and Secret Access Key for the IAM user.
+Set up Amazon S3:
+Create an S3 bucket to store your satellite imagery data, ocean current data, and model artifacts.
+Upload your data files (e.g., coastline data, ocean current data) to the S3 bucket.
+Set up Amazon EFS (Optional):
+If you plan to share data between multiple instances or services, create an Amazon EFS file system.
+Configure the necessary security groups and mount targets for your EFS file system.
+Set up AWS Batch:
+Create an AWS Batch compute environment, specifying the desired instance types (e.g., M5, C5, or P3 instances for GPU support) and the minimum/maximum number of instances.
+Create an AWS Batch job queue and associate it with the compute environment.
+Create an AWS Batch job definition, specifying the Docker image to use for your job (e.g., a custom image with your code and dependencies installed).
+Set up Amazon SageMaker:
+Create a SageMaker notebook instance or SageMaker Studio instance to develop and test your code.
+In your SageMaker notebook/studio, install the required Python packages (e.g., maxar, geopandas, xarray, hdbscan, rioxarray, ee, torch, requests, PIL).
+Update your code to use the appropriate S3 paths for reading and writing data, and use the IAM user credentials for authenticating with AWS services.
+Test your code locally on the SageMaker instance, making sure it can read data from S3 and write results back to S3.
+Integrate AWS Batch with SageMaker:
+Create a SageMaker processing job to run your code on AWS Batch.
+Specify the AWS Batch job definition, job queue, and any necessary environment variables or input/output data channels.
+Submit the SageMaker processing job, which will launch AWS Batch jobs to process your satellite imagery data.
+Monitor and Debug:
+Use AWS CloudWatch Logs to monitor the logs from your SageMaker processing job and AWS Batch jobs.
+Debug any issues that arise, and iterate on your code as needed.
+Scale and Optimize:
+Once your code is running successfully, you can scale up your AWS Batch compute environment to process larger volumes of data.
+Optimize your code and AWS Batch job configuration (e.g., instance types, job queues, Docker images) for better performance and cost-efficiency.
+As an undergraduate student, you may be eligible for AWS Educate or other educational programs that provide free AWS credits or discounts. Consult with your institution's IT department or AWS representatives to explore these options.
+
+Additionally, consider using AWS Cost Explorer and AWS Budgets to monitor and manage your AWS costs effectively.
