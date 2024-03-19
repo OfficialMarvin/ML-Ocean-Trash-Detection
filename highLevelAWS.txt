@@ -1,0 +1,8 @@
+After reviewing your code, it appears that you are using a pre-trained U-Net model from the Microsoft UNEtic repository for trash detection in satellite images. You are also using the Maxar API to fetch recent satellite imagery over ocean regions, and you are planning to integrate ocean current data to predict the trajectories of the detected trash clusters.
+
+For a project of this scale, where you plan to run daily trash detection and trajectory prediction on large volumes of satellite imagery, and eventually build a website and app, the best option on AWS would be to use a combination of the following services:
+
+Amazon SageMaker: As mentioned earlier, SageMaker is an excellent choice for building, training, and deploying machine learning models at scale. You can leverage SageMaker for your pre-trained U-Net model inference and potentially fine-tune the model on your specific dataset.
+AWS Batch: This service can help you run batch jobs to process large volumes of satellite imagery data in parallel, using a fleet of EC2 instances or AWS Fargate (serverless compute). You can integrate AWS Batch with SageMaker for running model inference on the processed satellite images.
+Amazon Elastic Container Service (ECS) or AWS Fargate: These services can be used to deploy and manage the containerized applications and microservices that will power your website and app. ECS allows you to run containers on a cluster of EC2 instances, while Fargate is a serverless compute engine for running containers without managing infrastructure.
+Amazon S3: You can use S3 to store your satellite imagery data, ocean current data, and model artifacts.
