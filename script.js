@@ -3,31 +3,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submit-btn');
     const responseDisplay = document.getElementById('response-display');
 
-    const API_URL = 'https://api-inference.huggingface.co/models/seena18/tier3_satellite_image_classification';
-    const API_TOKEN = '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';
+    async function loadModel() {
+        const modelUrl = 'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json';
+        const model = await tf.loadGraphModel(modelUrl);
+        return model;
+    }
 
-    async function detectTrash(imageFile, prompt) {
-        const formData = new FormData();
-        formData.append('image', imageFile);
-        formData.append('prompt', prompt);
+    async function classifyImage(model, imageElement, prompt) {
+        const tensor = tf.browser.fromPixels(imageElement).resizeNearestNeighbor([224, 224]).toFloat().expandDims();
+        const predictions = await model.predict(tensor).data();
+        const top5 = Array.from(predictions)
+            .map((p, i) => ({ probability: p, className: IMAGENET_CLASSES[i] }))
+            .sort((a, b) => b.probability - a.probability)
+            .slice(0, 5);
 
-        try {
-            const response = await fetch(API_URL, {
-                headers: { Authorization: `Bearer ${API_TOKEN}` },
-                method: 'POST',
-                body: formData,
-            });
+        const trashKeywords = ['plastic', 'trash', 'waste', 'garbage', 'litter'];
+        const isTrash = top5.some(item => trashKeywords.some(keyword => item.className.toLowerCase().includes(keyword)));
 
-            if (!response.ok) {
-                throw new Error('Failed to classify image');
-            }
-
-            const result = await response.json();
-            return result;
-        } catch (error) {
-            console.error('Error:', error);
-            throw new Error('An error occurred while processing the image.');
-        }
+        return { prompt, isTrash };
     }
 
     submitBtn.addEventListener('click', async () => {
@@ -41,25 +34,31 @@ document.addEventListener('DOMContentLoaded', () => {
         let trashCount = 0;
         let totalCount = 0;
 
+        const model = await loadModel();
+
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            const prompt = 'Is there trash in this ocean satellite picture?';
+            const prompt = 'Is there trash in this ocean satellite image?';
 
-            try {
-                const result = await detectTrash(file, prompt);
-                totalCount++;
+            const imageElement = await createImageElement(file);
+            const result = await classifyImage(model, imageElement, prompt);
+            totalCount++;
 
-                if (result.label === 'trash') {
-                    trashCount++;
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                responseDisplay.textContent = 'An error occurred while processing the images.';
-                return;
+            if (result.isTrash) {
+                trashCount++;
             }
         }
 
         const trashPercentage = (trashCount / totalCount) * 100;
-        responseDisplay.textContent = `Percentage of images with trash: ${trashPercentage.toFixed(2)}%`;
+        responseDisplay.textContent = `Prompt: Is there trash in this ocean satellite image?\nPercentage of images with trash: ${trashPercentage.toFixed(2)}%`;
     });
+
+    async function createImageElement(file) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = URL.createObjectURL(file);
+        });
+    }
 });
