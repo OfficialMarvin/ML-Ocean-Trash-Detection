@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const responseDisplay = document.getElementById('response-display');
 
     const API_URL = 'https://api-inference.huggingface.co/models/seena18/tier3_satellite_image_classification';
-    const API_TOKEN = '{YOUR_API_TOKEN}';
+    const API_TOKEN = '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';
 
     async function detectTrash(imageFile, prompt) {
         const formData = new FormData();
