@@ -3,25 +3,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submit-btn');
     const responseDisplay = document.getElementById('response-display');
 
-    async function detectTrash(imageFile) {
+    const API_URL = 'https://api-inference.huggingface.co/models/seena18/tier3_satellite_image_classification';
+    const API_TOKEN = '{YOUR_API_TOKEN}';
+
+    async function detectTrash(imageFile, prompt) {
         const formData = new FormData();
         formData.append('image', imageFile);
+        formData.append('prompt', prompt);
 
-        const response = await fetch(
-            'https://api-inference.huggingface.co/models/seena18/tier3_satellite_image_classification',
-            {
-                headers: { Authorization: 'Bearer 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' },
+        try {
+            const response = await fetch(API_URL, {
+                headers: { Authorization: `Bearer ${API_TOKEN}` },
                 method: 'POST',
                 body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to classify image');
             }
-        );
 
-        if (!response.ok) {
-            throw new Error('Failed to classify image');
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error('Error:', error);
+            throw new Error('An error occurred while processing the image.');
         }
-
-        const result = await response.json();
-        return result;
     }
 
     submitBtn.addEventListener('click', async () => {
@@ -37,9 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
+            const prompt = 'Is there trash in this ocean satellite picture?';
 
             try {
-                const result = await detectTrash(file);
+                const result = await detectTrash(file, prompt);
                 totalCount++;
 
                 if (result.label === 'trash') {
@@ -47,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('An error occurred while processing the images.');
+                responseDisplay.textContent = 'An error occurred while processing the images.';
                 return;
             }
         }
