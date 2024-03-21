@@ -2,12 +2,11 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    color: white; /* Set text color to white */
 }
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #ace6ff;
+    background-color: #f2f2f2;
 }
 
 .container {
@@ -44,16 +43,16 @@ h1 {
 .submit-btn {
     padding: 10px 20px;
     font-size: 18px;
-    background-color: #1a237e; /* Set a light shade of deep blue */
+    background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 50%; /* Make the button a cooler shape */
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
-    background-color: #0d47a1; /* Make the button funkier with a darker shade */
+    background-color: #45a049;
 }
 
 .response-display {
@@ -64,6 +63,8 @@ h1 {
     border-radius: 4px;
     text-align: center;
     font-size: 18px;
+    color: #1a237e; /* Dark blue color */
+    white-space: pre-wrap; /* Preserve line breaks */
 }
 
 @media screen and (max-width: 600px) {
