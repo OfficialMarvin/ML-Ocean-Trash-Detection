@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ocean Trash Detection</title>
+    <title>Ocean Trash Detecton</title>
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.88/Build/Cesium/Cesium.js"></script>
     <link href="https://cesium.com/downloads/cesiumjs/releases/1.88/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
     <style>
@@ -12,55 +12,6 @@
 </head>
 <body>
     <div id="cesiumContainer"></div>
-    <script>
-        Cesium.Ion.defaultAccessToken = 'your-access-token-here';
-        const viewer = new Cesium.Viewer('cesiumContainer', {
-            terrainProvider: Cesium.createWorldTerrain()
-        });
-
-        function addPoint(latitude, longitude, date, area) {
-            viewer.entities.add({
-                position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
-                point: {
-                    pixelSize: 10,
-                    color: Cesium.Color.RED,
-                    outlineColor: Cesium.Color.WHITE,
-                    outlineWidth: 2
-                },
-                label: {
-                    text: `Date: ${date}\nArea: ${area} km²`,
-                    font: '14pt monospace',
-                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                    outlineWidth: 2,
-                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                    pixelOffset: new Cesium.Cartesian2(0, -9)
-                }
-            });
-        }
-
-        // Fetch the data
-        fetch('https://cors-anywhere.herokuapp.com/https://www.ospo.noaa.gov/Products/ocean/marinepollution/')
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, "text/html");
-                const rows = doc.querySelectorAll("table[align='center'] > tbody > tr");
-
-                rows.forEach(row => {
-                    const cells = row.querySelectorAll('td');
-                    if(cells.length > 0) {
-                        const region = cells[0].textContent.trim();
-                        const date = cells[1].textContent.trim();
-                        const area = cells[4].textContent.trim();
-
-                        // Example coordinates, you will need actual coordinates
-                        const latitude = 28.3949;  // Placeholder latitude
-                        const longitude = -81.4292; // Placeholder longitude
-                        addPoint(latitude, longitude, date, area);
-                    }
-                });
-            })
-            .catch(error => console.error('Error loading the data:', error));
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
