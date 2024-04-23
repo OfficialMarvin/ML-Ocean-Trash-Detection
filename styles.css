@@ -1,94 +1,11 @@
-* {
-    box-sizing: border-box;
+body, html {
+    height: 100%;
     margin: 0;
-    padding: 0;
+    overflow: hidden;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-}
-
-h1 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.input-section {
-    margin-bottom: 20px;
-}
-
-.upload-label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 18px;
-}
-
-.folder-upload {
-    display: inline-block;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.submit-btn {
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.submit-btn:hover {
-    background-color: #45a049;
-}
-
-.response-display {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: center;
-    font-size: 18px;
-    color: #1a237e; /* Dark blue color */
-    white-space: pre-wrap; /* Preserve line breaks */
-}
-
-@media screen and (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    .upload-label {
-        font-size: 16px;
-    }
-
-    .folder-upload {
-        font-size: 14px;
-    }
-
-    .submit-btn {
-        font-size: 16px;
-    }
-
-    .response-display {
-        font-size: 16px;
-    }
+#globe {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
 }

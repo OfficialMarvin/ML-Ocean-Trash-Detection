@@ -3,24 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ocean Trash Detection</title>
+    <title>Interactive Globe</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Load TensorFlow.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-    <!-- Load SunWeb -->
-    <script src="https://unpkg.com/sunweb"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Ocean Trash Detection</h1>
-        <div class="input-section">
-            <label for="folder-upload" class="upload-label">Select a folder containing ocean satellite images:</label>
-            <input type="file" id="folder-upload" class="folder-upload" webkitdirectory mozdirectory>
-        </div>
-        <button id="submit-btn" class="submit-btn">Detect Trash</button>
-        <div id="response-display" class="response-display"></div>
-    </div>
-    <!-- Load your custom script -->
-    <script src="script.js"></script>
+    <div id="globe"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
