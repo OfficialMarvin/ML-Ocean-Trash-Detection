@@ -21,7 +21,7 @@
         #folder-upload {
             display: none;
         }
-        #submit-btn {
+        #upload-label {
             padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
@@ -29,7 +29,7 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        #submit-btn:hover {
+        #upload-label:hover {
             background-color: #45a049;
         }
         #response-display {
@@ -42,7 +42,7 @@
     <div id="cesiumContainer"></div>
     <div id="uploadContainer">
         <input type="file" id="folder-upload" multiple webkitdirectory directory />
-        <button id="submit-btn">Upload Images</button>
+        <label for="folder-upload" id="upload-label">Upload Images</label>
         <div id="response-display"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
